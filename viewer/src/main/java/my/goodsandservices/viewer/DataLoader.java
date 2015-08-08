@@ -3,6 +3,7 @@ package my.goodsandservices.viewer;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+import org.json.JSONException;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
@@ -35,7 +36,14 @@ public class DataLoader extends AsyncTask<String, Void, String> {
 
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(String jsonString) {
+        String result = null;
+        try {
+            result = JSONParser.parse(jsonString);
+        } catch (JSONException e) {
+            Log.e(TAG, "Failed to parse data", e);
+            Helper.showToUser(R.string.failed_to_parse_data);
+        }
         resultView.setText(result);
     }
 

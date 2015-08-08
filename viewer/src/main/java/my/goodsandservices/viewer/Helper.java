@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
-public class Helper {
+public final class Helper {
     private static final String TAG = "Helper";
     private static Activity activity;
+
+    private Helper() { /* */ }
 
     public static void init(Activity a) {
         activity = a;
