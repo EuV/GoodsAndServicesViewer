@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Товары и услуги Яндекс.Денег</string>
+    <string name="refresh">Обновить</string>
+    <string name="reset">Стереть</string>
+    <string name="no_network_connection">Нет подключения к сети</string>
+    <string name="failed_to_load_data">Не удалось загрузить данные</string>
 </resources>
