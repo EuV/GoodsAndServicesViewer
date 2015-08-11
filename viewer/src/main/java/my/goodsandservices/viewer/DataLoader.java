@@ -9,6 +9,8 @@ import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class DataLoader extends AsyncTask<String, Void, String> {
@@ -16,10 +18,10 @@ public class DataLoader extends AsyncTask<String, Void, String> {
     public static final int CONNECT_TIMEOUT = 15 * 1000;
     public static final int READ_TIMEOUT = 10 * 1000;
 
-    private TextView resultView;
+    private TreeAdapter treeAdapter;
 
-    public DataLoader(TextView resultView) {
-        this.resultView = resultView;
+    public DataLoader(TreeAdapter treeAdapter) {
+        this.treeAdapter = treeAdapter;
     }
 
 
@@ -37,14 +39,14 @@ public class DataLoader extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String jsonString) {
-        String result = null;
+        List<String> tree = new ArrayList<>();
         try {
-            result = JSONParser.parse(jsonString);
+            tree = JSONParser.parse(jsonString);
         } catch (JSONException e) {
             Log.e(TAG, "Failed to parse data", e);
             Helper.showToUser(R.string.failed_to_parse_data);
         }
-        resultView.setText(result);
+        treeAdapter.setTree(tree);
     }
 
 

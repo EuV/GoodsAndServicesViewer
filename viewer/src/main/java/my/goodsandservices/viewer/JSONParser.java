@@ -5,6 +5,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class JSONParser {
     private static final String TAG = "JSONParser";
     private static final String KEY_ID = "id";
@@ -14,22 +17,23 @@ public final class JSONParser {
     private JSONParser() { /* */ }
 
 
-    public static String parse(String jsonString) throws JSONException {
-        StringBuilder stringBuilder = new StringBuilder();
+    public static List<String> parse(String jsonString) throws JSONException {
+        List<String> tree = new ArrayList<>();
 
-        parseNodes(stringBuilder, new JSONArray(jsonString), 0);
+        parseNodes(tree, new JSONArray(jsonString), 0);
 
-        return stringBuilder.toString();
+        return tree;
     }
 
 
-    private static void parseNodes(StringBuilder sb, JSONArray array, int level) throws JSONException {
+    private static void parseNodes(List<String> tree, JSONArray array, int level) throws JSONException {
         Log.d(TAG, "Parse nodes at level " + level);
 
         for (int i = 0; i < array.length(); i++) {
-            JSONObject object = array.getJSONObject(i);
-
+            StringBuilder sb = new StringBuilder();
             sb.append(new String(new char[level]).replace("\0", "-"));
+
+            JSONObject object = array.getJSONObject(i);
 
             if (object.has(KEY_TITLE)) {
                 sb.append(object.getString(KEY_TITLE));
@@ -41,10 +45,10 @@ public final class JSONParser {
                 sb.append("]");
             }
 
-            sb.append("\n");
+            tree.add(sb.toString());
 
             if (object.has(KEY_SUBS)) {
-                parseNodes(sb, object.getJSONArray(KEY_SUBS), level + 1);
+                parseNodes(tree, object.getJSONArray(KEY_SUBS), level + 1);
             }
         }
     }

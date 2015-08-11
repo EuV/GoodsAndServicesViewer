@@ -22,8 +22,8 @@
         android:layout_toEndOf="@+id/button_refresh"
         android:onClick="resetButtonClickHandler" />
 
-    <TextView
-        android:id="@+id/text_result"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tree_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/button_refresh"
