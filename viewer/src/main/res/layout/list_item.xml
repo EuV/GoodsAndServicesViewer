@@ -1,7 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:textSize="25sp">
+    android:layout_height="?android:attr/listPreferredItemHeight">
 
-</TextView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:id="@+id/list_item_indent" />
+
+    <ImageView
+        android:id="@+id/list_item_marker"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_toRightOf="@id/list_item_indent"
+        android:layout_toEndOf="@id/list_item_indent"
+        android:layout_centerVertical="true"
+        android:src="@drawable/list_marker"
+        android:alpha="0.87"
+        android:scaleType="centerInside"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/list_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/list_item_marker"
+        android:layout_toEndOf="@id/list_item_marker"
+        android:layout_centerVertical="true"
+        android:textAppearance="?android:attr/textAppearanceListItem" />
+
+</RelativeLayout>

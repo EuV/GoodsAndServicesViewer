@@ -13,7 +13,7 @@ public class Node {
     public Node(int level, Integer id, String title, List<Node> subs) {
         this.level = level;
         this.id = id;
-        this.title = new String(new char[level]).replace("\0", "-") + title;
+        this.title = title;
         this.subs = subs;
     }
 
