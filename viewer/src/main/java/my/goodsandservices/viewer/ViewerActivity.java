@@ -9,8 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
-
 public class ViewerActivity extends AppCompatActivity {
     private static final String TAG = "ViewerActivity";
     private static final String URL = "https://money.yandex.ru/api/categories-list";
@@ -38,10 +36,5 @@ public class ViewerActivity extends AppCompatActivity {
             Log.d(TAG, "No network connection");
             Helper.showToUser(R.string.no_network_connection);
         }
-    }
-
-
-    public void resetButtonClickHandler(View view) {
-        treeAdapter.setTree(new ArrayList<Node>());
     }
 }
