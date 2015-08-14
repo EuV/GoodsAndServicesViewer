@@ -17,39 +17,24 @@ public final class JSONParser {
     private JSONParser() { /* */ }
 
 
-    public static List<String> parse(String jsonString) throws JSONException {
-        List<String> tree = new ArrayList<>();
-
-        parseNodes(tree, new JSONArray(jsonString), 0);
-
-        return tree;
+    public static List<Node> parse(String jsonString) throws JSONException {
+        return parseNodes(new ArrayList<Node>(), new JSONArray(jsonString), 0);
     }
 
 
-    private static void parseNodes(List<String> tree, JSONArray array, int level) throws JSONException {
+    private static List<Node> parseNodes(List<Node> tree, JSONArray rawArray, int level) throws JSONException {
         Log.d(TAG, "Parse nodes at level " + level);
 
-        for (int i = 0; i < array.length(); i++) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(new String(new char[level]).replace("\0", "-"));
+        for (int i = 0; i < rawArray.length(); i++) {
+            JSONObject obj = rawArray.getJSONObject(i);
 
-            JSONObject object = array.getJSONObject(i);
+            Integer id = obj.has(KEY_ID) ? obj.getInt(KEY_ID) : null;
+            String title = obj.has(KEY_TITLE) ? obj.getString(KEY_TITLE) : null;
+            List<Node> subs = obj.has(KEY_SUBS) ? parseNodes(new ArrayList<Node>(), obj.getJSONArray(KEY_SUBS), level + 1) : null;
 
-            if (object.has(KEY_TITLE)) {
-                sb.append(object.getString(KEY_TITLE));
-            }
-
-            if (object.has(KEY_ID)) {
-                sb.append(" [");
-                sb.append(object.getString(KEY_ID));
-                sb.append("]");
-            }
-
-            tree.add(sb.toString());
-
-            if (object.has(KEY_SUBS)) {
-                parseNodes(tree, object.getJSONArray(KEY_SUBS), level + 1);
-            }
+            tree.add(new Node(level, id, title, subs));
         }
+
+        return tree;
     }
 }

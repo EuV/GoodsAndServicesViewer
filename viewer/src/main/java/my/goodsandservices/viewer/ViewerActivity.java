@@ -42,6 +42,6 @@ public class ViewerActivity extends AppCompatActivity {
 
 
     public void resetButtonClickHandler(View view) {
-        treeAdapter.setTree(new ArrayList<String>());
+        treeAdapter.setTree(new ArrayList<Node>());
     }
 }

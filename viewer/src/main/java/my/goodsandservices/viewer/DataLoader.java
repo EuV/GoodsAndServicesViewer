@@ -2,15 +2,12 @@ package my.goodsandservices.viewer;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
 import org.json.JSONException;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class DataLoader extends AsyncTask<String, Void, String> {
@@ -39,14 +36,12 @@ public class DataLoader extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String jsonString) {
-        List<String> tree = new ArrayList<>();
         try {
-            tree = JSONParser.parse(jsonString);
+            treeAdapter.setTree(JSONParser.parse(jsonString));
         } catch (JSONException e) {
             Log.e(TAG, "Failed to parse data", e);
             Helper.showToUser(R.string.failed_to_parse_data);
         }
-        treeAdapter.setTree(tree);
     }
 
 
