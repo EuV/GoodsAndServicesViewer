@@ -10,15 +10,14 @@ import android.util.Log;
 import android.view.View;
 
 public class ViewerActivity extends AppCompatActivity {
-    private static final String TAG = "ViewerActivity";
-    private static final String URL = "https://money.yandex.ru/api/categories-list";
+    private static final String TAG = ViewerActivity.class.getSimpleName();
 
     private TreeAdapter treeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Helper.init(this);
+        NotificationHelper.init(this);
         setContentView(R.layout.activity_viewer);
 
         RecyclerView treeView = (RecyclerView) findViewById(R.id.tree_view);
@@ -31,10 +30,10 @@ public class ViewerActivity extends AppCompatActivity {
     public void refreshButtonClickHandler(View view) {
         NetworkInfo networkInfo = ((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            new DataLoader(treeAdapter).execute(URL);
+            new DataController(treeAdapter).load();
         } else {
             Log.d(TAG, "No network connection");
-            Helper.showToUser(R.string.no_network_connection);
+            NotificationHelper.showToUser(R.string.no_network_connection);
         }
     }
 }

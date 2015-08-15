@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class JSONParser {
-    private static final String TAG = "JSONParser";
+    private static final String TAG = JSONParser.class.getSimpleName();
     private static final String KEY_ID = "id";
     private static final String KEY_TITLE = "title";
     private static final String KEY_SUBS = "subs";
