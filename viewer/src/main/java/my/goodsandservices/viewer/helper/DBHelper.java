@@ -1,4 +1,4 @@
-package my.goodsandservices.viewer;
+package my.goodsandservices.viewer.helper;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -6,14 +6,19 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
-import my.goodsandservices.viewer.CategoriesContract.Categories;
+import my.goodsandservices.viewer.Node;
+import my.goodsandservices.viewer.db.CategoriesContract;
+import my.goodsandservices.viewer.db.CategoriesContract.Categories;
+import my.goodsandservices.viewer.db.CategoriesDBHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBHelper {
+public final class DBHelper {
     private static final String TAG = DBHelper.class.getSimpleName();
     private static Activity activity;
+
+    private DBHelper() { /* */ }
 
     public static void init(Activity a) {
         activity = a;

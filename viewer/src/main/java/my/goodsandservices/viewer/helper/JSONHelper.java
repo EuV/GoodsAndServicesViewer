@@ -1,6 +1,8 @@
-package my.goodsandservices.viewer;
+package my.goodsandservices.viewer.helper;
 
 import android.util.Log;
+import my.goodsandservices.viewer.Node;
+import my.goodsandservices.viewer.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,17 +10,27 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class JSONParser {
-    private static final String TAG = JSONParser.class.getSimpleName();
+public final class JSONHelper {
+    private static final String TAG = JSONHelper.class.getSimpleName();
     private static final String KEY_ID = "id";
     private static final String KEY_TITLE = "title";
     private static final String KEY_SUBS = "subs";
 
-    private JSONParser() { /* */ }
+    private JSONHelper() { /* */ }
 
 
-    public static List<Node> parse(String jsonString) throws JSONException {
-        return parseNodes(new ArrayList<Node>(), new JSONArray(jsonString), 0);
+    public static List<Node> parse(String jsonString) {
+        List<Node> tree = new ArrayList<>();
+
+        try {
+            parseNodes(tree, new JSONArray(jsonString), 0);
+        } catch (JSONException e) {
+            Log.e(TAG, "Failed to parse data", e);
+            NotificationHelper.showToUser(R.string.failed_to_parse_data);
+            return new ArrayList<>();
+        }
+
+        return tree;
     }
 
 

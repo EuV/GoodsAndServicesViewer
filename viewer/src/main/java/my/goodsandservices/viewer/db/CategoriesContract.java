@@ -1,4 +1,4 @@
-package my.goodsandservices.viewer;
+package my.goodsandservices.viewer.db;
 
 import android.provider.BaseColumns;
 

@@ -1,10 +1,11 @@
-package my.goodsandservices.viewer;
+package my.goodsandservices.viewer.helper;
 
 import android.app.Activity;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
+import my.goodsandservices.viewer.R;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.util.Scanner;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
-public class HTTPSHelper extends AsyncTask<String, Void, String> {
+public final class HTTPSHelper extends AsyncTask<String, Void, String> {
     private static final String TAG = HTTPSHelper.class.getSimpleName();
     private static final int CONNECT_TIMEOUT = 15 * 1000;
     private static final int READ_TIMEOUT = 10 * 1000;

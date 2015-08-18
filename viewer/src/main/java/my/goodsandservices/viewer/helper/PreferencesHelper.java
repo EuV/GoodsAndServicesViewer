@@ -1,4 +1,4 @@
-package my.goodsandservices.viewer;
+package my.goodsandservices.viewer.helper;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,7 +1,7 @@
 package my.goodsandservices.viewer;
 
 import android.util.Log;
-import org.json.JSONException;
+import my.goodsandservices.viewer.helper.*;
 
 import java.util.List;
 
@@ -17,11 +17,13 @@ public class DataController implements DBHelper.OnLocalDataLoadedListener, HTTPS
 
 
     public void restore() {
+        Log.d(TAG, "Restoring Goods and Services tree from database...");
         DBHelper.load(this);
     }
 
 
     public void download() {
+        Log.d(TAG, "Downloading Goods and Services tree...");
         HTTPSHelper.load(this, URL);
     }
 
@@ -41,18 +43,12 @@ public class DataController implements DBHelper.OnLocalDataLoadedListener, HTTPS
             return;
         }
 
-        List<Node> tree;
-        try {
-            tree = JSONParser.parse(rawData);
-        } catch (JSONException e) {
-            Log.e(TAG, "Failed to parse data", e);
-            NotificationHelper.showToUser(R.string.failed_to_parse_data);
-            return;
-        }
+        List<Node> tree = JSONHelper.parse(rawData);
 
         DBHelper.save(tree, rawData);
 
         treeAdapter.setTree(tree);
+
         NotificationHelper.showToUser(R.string.list_updated);
     }
 }
