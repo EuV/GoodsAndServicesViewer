@@ -1,5 +1,8 @@
 package my.goodsandservices.viewer;
 
+import android.app.Activity;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,15 +12,34 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
 
-public class HTTPSLoader extends AsyncTask<String, Void, String> {
-    private static final String TAG = HTTPSLoader.class.getSimpleName();
+import static android.content.Context.CONNECTIVITY_SERVICE;
+
+public class HTTPSHelper extends AsyncTask<String, Void, String> {
+    private static final String TAG = HTTPSHelper.class.getSimpleName();
     private static final int CONNECT_TIMEOUT = 15 * 1000;
     private static final int READ_TIMEOUT = 10 * 1000;
 
-    private OnDataLoadedListener listener;
+    private static Activity activity;
 
-    public HTTPSLoader(OnDataLoadedListener listener) {
+    private final OnWebDataLoadedListener listener;
+
+    private HTTPSHelper(OnWebDataLoadedListener listener) {
         this.listener = listener;
+    }
+
+    public static void init(Activity a) {
+        activity = a;
+    }
+
+
+    public static void load(OnWebDataLoadedListener listener, String url) {
+        NetworkInfo info = ((ConnectivityManager) activity.getSystemService(CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        if (info != null && info.isConnected()) {
+            new HTTPSHelper(listener).execute(url);
+        } else {
+            Log.d(TAG, "No network connection");
+            NotificationHelper.showToUser(R.string.no_network_connection);
+        }
     }
 
 
@@ -35,7 +57,7 @@ public class HTTPSLoader extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String rawData) {
-        listener.onDataLoaded(rawData);
+        listener.onWebDataLoaded(rawData);
     }
 
 
@@ -70,7 +92,7 @@ public class HTTPSLoader extends AsyncTask<String, Void, String> {
     }
 
 
-    public interface OnDataLoadedListener {
-        void onDataLoaded(String rawData);
+    public interface OnWebDataLoadedListener {
+        void onWebDataLoaded(String rawData);
     }
 }

@@ -7,7 +7,7 @@ public class Node {
     public final int level;
     public final Integer id;
     public final String title;
-    private final List<Node> subs;
+    public List<Node> subs;
     private boolean expanded = false;
 
     public Node(int level, Integer id, String title, List<Node> subs) {
@@ -20,6 +20,14 @@ public class Node {
 
     public boolean hasSubs() {
         return subs != null && !subs.isEmpty();
+    }
+
+
+    public void addSub(Node node) {
+        if (subs == null) {
+            subs = new ArrayList<>();
+        }
+        subs.add(node);
     }
 
 

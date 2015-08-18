@@ -16,7 +16,7 @@ public final class NotificationHelper {
 
     public static void showToUser(final int resId) {
         if (activity == null) {
-            Log.e(TAG, "To show messages the Helper should be initialized via calling Helper.init(Activity a) method");
+            Log.e(TAG, "To show messages NotificationHelper should first be initialized with Activity instance");
             return;
         }
 
