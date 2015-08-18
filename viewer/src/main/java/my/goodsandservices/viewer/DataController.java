@@ -37,6 +37,7 @@ public class DataController implements DBHelper.OnLocalDataLoadedListener, HTTPS
         if (rawData == null || rawData.isEmpty()) return;
 
         if (PreferencesHelper.isAlreadyUpToDate(rawData)) {
+            NotificationHelper.showToUser(R.string.no_updates);
             return;
         }
 
@@ -52,5 +53,6 @@ public class DataController implements DBHelper.OnLocalDataLoadedListener, HTTPS
         DBHelper.save(tree, rawData);
 
         treeAdapter.setTree(tree);
+        NotificationHelper.showToUser(R.string.list_updated);
     }
 }

@@ -3,4 +3,6 @@
     <string name="no_network_connection">Нет подключения к сети</string>
     <string name="failed_to_load_data">Не удалось загрузить данные</string>
     <string name="failed_to_parse_data">Ошибка в формате данных</string>
+    <string name="no_updates">Нет обновлений</string>
+    <string name="list_updated">Список обновлён</string>
 </resources>
