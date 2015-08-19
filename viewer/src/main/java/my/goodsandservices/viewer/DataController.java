@@ -6,6 +6,12 @@ import my.goodsandservices.viewer.helper.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * An additional level of abstraction which combines and encapsulates
+ * management of Goods and Services tree.
+ * Delegates most of the work to specific helper classes.
+ */
 public class DataController implements DBHelper.OnLocalDataLoadedListener, HTTPSHelper.OnWebDataLoadedListener {
     private static final String TAG = DataController.class.getSimpleName();
     private static final String URL = "https://money.yandex.ru/api/categories-list";
@@ -65,7 +71,7 @@ public class DataController implements DBHelper.OnLocalDataLoadedListener, HTTPS
         treeAdapter.setTree(tree);
 
         // Don't show this message when the app is loaded first time
-        if(hasDataLocalCopy) {
+        if (hasDataLocalCopy) {
             NotificationHelper.showToUser(R.string.list_updated);
         }
     }

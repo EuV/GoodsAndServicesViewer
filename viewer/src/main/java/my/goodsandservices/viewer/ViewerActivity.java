@@ -13,7 +13,6 @@ import my.goodsandservices.viewer.helper.PreferencesHelper;
 import java.util.List;
 
 public class ViewerActivity extends AppCompatActivity {
-    private static final String TAG = ViewerActivity.class.getSimpleName();
     private static final String PACKED_TREE = "packed_tree";
 
     private DataController dataController;
@@ -37,7 +36,6 @@ public class ViewerActivity extends AppCompatActivity {
             dataController.unpack(packedTree);
             return;
         }
-
 
         if (PreferencesHelper.hasDataLocalCopy()) {
             dataController.restore();
