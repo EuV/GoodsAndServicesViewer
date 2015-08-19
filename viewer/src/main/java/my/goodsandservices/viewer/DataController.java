@@ -56,12 +56,17 @@ public class DataController implements DBHelper.OnLocalDataLoadedListener, HTTPS
             return;
         }
 
+        boolean hasDataLocalCopy = PreferencesHelper.hasDataLocalCopy();
+
         List<Node> tree = JSONHelper.parse(rawData);
 
         DBHelper.save(tree, rawData);
 
         treeAdapter.setTree(tree);
 
-        NotificationHelper.showToUser(R.string.list_updated);
+        // Don't show this message when the app is loaded first time
+        if(hasDataLocalCopy) {
+            NotificationHelper.showToUser(R.string.list_updated);
+        }
     }
 }
