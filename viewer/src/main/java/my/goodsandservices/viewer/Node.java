@@ -1,9 +1,12 @@
 package my.goodsandservices.viewer;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node {
+public class Node implements Parcelable {
     public final int level;
     public final Integer id;
     public final String title;
@@ -15,6 +18,16 @@ public class Node {
         this.id = id;
         this.title = title;
         this.subs = subs;
+    }
+
+
+    private Node(Parcel src) {
+        level = src.readInt();
+        Integer i = src.readInt();
+        id = (i == -1) ? null : i;
+        title = src.readString();
+        subs = null;
+        expanded = (boolean) src.readValue(null);
     }
 
 
@@ -66,6 +79,31 @@ public class Node {
 
     @Override
     public String toString() {
-        return "{" + (expanded ? "+" : "-") + "[" + level + "] " + title + "}";
+        return "{" + (expanded ? "+" : "-") + "[" + level + "] " + (title == null ? "" : title) + "}";
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(level);
+        dest.writeInt((id == null) ? -1 : id);
+        dest.writeString((title == null) ? "" : title);
+        dest.writeValue(expanded);
+    }
+
+    public static final Parcelable.Creator<Node> CREATOR = new Parcelable.Creator<Node>() {
+        @Override
+        public Node createFromParcel(Parcel src) {
+            return new Node(src);
+        }
+
+        @Override
+        public Node[] newArray(int size) {
+            return new Node[size];
+        }
+    };
 }

@@ -67,6 +67,11 @@ public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.NodeHolder> {
     }
 
 
+    public List<Node> getTree() {
+        return treeDataProvider;
+    }
+
+
     class NodeHolder extends RecyclerView.ViewHolder {
         final View indent;
         final ImageView marker;

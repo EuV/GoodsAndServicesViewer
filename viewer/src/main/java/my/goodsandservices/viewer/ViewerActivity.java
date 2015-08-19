@@ -10,14 +10,17 @@ import my.goodsandservices.viewer.helper.HTTPSHelper;
 import my.goodsandservices.viewer.helper.NotificationHelper;
 import my.goodsandservices.viewer.helper.PreferencesHelper;
 
+import java.util.List;
+
 public class ViewerActivity extends AppCompatActivity {
     private static final String TAG = ViewerActivity.class.getSimpleName();
+    private static final String PACKED_TREE = "packed_tree";
 
     private DataController dataController;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle state) {
+        super.onCreate(state);
         setContentView(R.layout.activity_viewer);
 
         initHelpers();
@@ -29,11 +32,25 @@ public class ViewerActivity extends AppCompatActivity {
 
         dataController = new DataController(treeAdapter);
 
+        if (state != null && state.containsKey(PACKED_TREE)) {
+            List<Node> packedTree = state.getParcelableArrayList(PACKED_TREE);
+            dataController.unpack(packedTree);
+            return;
+        }
+
+
         if (PreferencesHelper.hasDataLocalCopy()) {
             dataController.restore();
         } else {
             dataController.download();
         }
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle state) {
+        state.putParcelableArrayList(PACKED_TREE, dataController.pack());
+        super.onSaveInstanceState(state);
     }
 
 

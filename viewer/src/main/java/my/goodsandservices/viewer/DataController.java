@@ -3,6 +3,7 @@ package my.goodsandservices.viewer;
 import android.util.Log;
 import my.goodsandservices.viewer.helper.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataController implements DBHelper.OnLocalDataLoadedListener, HTTPSHelper.OnWebDataLoadedListener {
@@ -25,6 +26,18 @@ public class DataController implements DBHelper.OnLocalDataLoadedListener, HTTPS
     public void download() {
         Log.d(TAG, "Downloading Goods and Services tree...");
         HTTPSHelper.load(this, URL);
+    }
+
+
+    public ArrayList<Node> pack() {
+        Log.d(TAG, "Preparing Goods and Services tree to be put in a Bundle...");
+        return ConfigurationChangeHelper.pack(treeAdapter.getTree());
+    }
+
+
+    public void unpack(List<Node> tree) {
+        Log.d(TAG, "Restoring Goods and Services tree from a Bundle format...");
+        treeAdapter.setTree(ConfigurationChangeHelper.unpack(tree));
     }
 
 
